@@ -93,3 +93,13 @@ $git log --oneline
 $git log -2 --oneline
 ```
 
+
+
+## 원격저장소 활용 명령어
+
+### push
+
+```bash
+$git push origin master
+```
+
