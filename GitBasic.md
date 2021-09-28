@@ -103,6 +103,7 @@ $git log -2 --oneline
 $git push origin master
 ```
 
+<<<<<<< HEAD
 
 
 # push error
@@ -184,3 +185,5 @@ To https://github.com/edutak/0928.git
 
 
 
+=======
+>>>>>>> 04a27d887f703229e48b6808e50d3b06f1f243c8
