@@ -34,7 +34,7 @@ public class DivideTest {
 
 
 
-- 중첩해서 사용할 수도 있다 (2개 초과로도 계속 가능)
+- 중첩캐치, 멀티캐치  중첩해서 사용할 수도 있다 (2개 초과로도 계속 가능)
 
 ```java
 package test2.exception;
@@ -147,4 +147,8 @@ public class MyException extends Exception {
 }
 
 ```
+
+
+
+- 멀티
 

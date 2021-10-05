@@ -45,3 +45,8 @@ public interface Flyer {
 }
 ```
 
+
+
+
+
+- interface 끼리의 상속은 extends를 사용한다
