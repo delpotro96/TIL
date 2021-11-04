@@ -2,6 +2,14 @@
 
 
 
+- 참고
+
+[[Spring Boot\] 게시판 구현 하기 (1) - 글 작성 & 글 목록 출력 (kyuhyuk.kr)](https://kyuhyuk.kr/article/spring-boot/2020/07/19/Spring-Boot-JPA-MySQL-Board-Write-Post)
+
+
+
+
+
 ## 플러그인
 
 - Spring boot DevTools
