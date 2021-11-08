@@ -14,9 +14,7 @@
 
 - Spring boot DevTools
 - Lombok
-- Spring Configuration Processor
 - Spring Data JPA
-- MyBatis Framework
 - MariaDB Drivaer
 - Thymeleaf
 - Spring Web
@@ -50,10 +48,15 @@ spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
 
 - templates에 board & common 폴더 만들기
 
-  - board 에는 게시판과 관련된 html 파일이 저장
-  - common 에는 board에서 사용하는 공통적인 파일을 관리
+- board 에는 게시판과 관련된 html 파일이 저장
 
+- common 에는 board에서 사용하는 공통적인 파일을 관리
+
+  
+  
   ### common/header.html 생성
+  
+  
 
 ```html
 <div class="navbar navbar-dark bg-dark shadow-sm mb-3">
@@ -65,7 +68,7 @@ spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
 </div>
 ```
 
-	### 	board/list.html 생성
+### board/list.html 생성
 
 ```html
 <!DOCTYPE html>
@@ -119,7 +122,7 @@ spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
 </html>
 ```
 
-### 	board/post.html 생성
+board/post.html 생성
 
 ```html
 <!DOCTYPE html>
@@ -187,7 +190,7 @@ public class BoardController {
 }
 ```
 
-- 글쓰기 페이지에서 글쓰기 버튼을 누르면 Post 요청이 옴
+- 글쓰기 페이지에서 글쓰기 버튼을 누르면 /Post 요청이 옴
 - Post 방식의 요청을 받아서, Service에서 처리되도록 할  것
 
 
@@ -197,6 +200,13 @@ public class BoardController {
 #### 		domain/entity/Board 생성
 
 <!-- 이 부분 공부 필요-->
+
+- @Entity 어노테이션을 선언하면 그 클래스는 JPA가 관리한다.
+- @Column 어노테이션은 객체 필드와 DB 테이블 컬럼을 맵핑한다.
+- @Id 어노테이션은 JPA가 객체를 관리할 때 식별할 기본키(Primary Key)를 지정한다.
+- @GeneratedValue 어노테이션은 값을 자동 생성한다(Auto_increment)
+
+
 
 ```java 
 import lombok.AccessLevel;
