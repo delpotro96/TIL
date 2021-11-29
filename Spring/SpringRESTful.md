@@ -29,5 +29,22 @@
 
 
 
+### ex) Social Media Application
+
+| Description                   | REST API                    | HTTP Method |
+| ----------------------------- | --------------------------- | ----------- |
+| Retrieve all Users            | /users                      | GET         |
+| Create a User                 | /users                      | POST        |
+| Retrieve one User             | /users/{id}                 | GET         |
+| Delete a User                 | /users/{id}                 | DELETE      |
+| Retrieve all posts for a User | /users/{id}                 | GET         |
+| Create a posts for a User     | /users/{id}/posts           | POST        |
+| Retrieve details of a User    | /users/{id}/posts/{post id} | GET         |
 
 
+
+### RestController
+
+- Spring4 부터 @RestController 지원
+- @Controller + @ResponseBody
+- View를 갖지 않는 REST Data(JSON/XML)를 반환
