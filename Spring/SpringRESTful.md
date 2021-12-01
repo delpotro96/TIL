@@ -1,3 +1,5 @@
+
+
 # SOAP와 REST의 이해
 
 <!--참고 **Spring Boot를 이용한 RESTful Web Services 개발**[Dowon Lee](https://www.inflearn.com/users/40572) -->
@@ -447,6 +449,93 @@ greeting.message=안녕하세요
  @GetMapping(path = "/hello-world-internationalized")
     public String helloWorldInternationalized(@RequestHeader(name="Accept-Language", required = false) Locale locale){
         return messageSource.getMessage("greeting.message", null, locale);
+    }
+```
+
+
+
+### Response 데이터 제어를 위한 Filtering
+
+- 비밀번호나 주민등록번호와 같은 민감정보를 제어
+
+
+
+#### Domain 클래스 수정(일괄 필터링의 경우)
+
+```java
+@JsonIgnoreProperties(value = {"password", "ssn"})
+public class User {
+ 	...
+}
+```
+
+
+
+####  Domain 수정
+
+```java
+@JsonFilter("UserInfo")
+public class User {
+	...
+}
+```
+
+
+
+#### Controller 수정
+
+```java
+SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+                .filterOutAllExcept("id", "name", "joinDate", "ssn");
+
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping;
+```
+
+
+
+
+
+### HETAOAS(Hypermedia As the Engine Of Application State)
+
+- 해테오스는 현재 사용하고 있는 restful의 리소스와 연관된, 호출 가능한 자원 상태를 함께 제공하는 것을 의미함
+
+
+
+#### pom.xml 추가
+
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-hateoas</artifactId>
+</dependency>
+```
+
+
+
+#### Controller 변경
+
+```java
+@GetMapping("/users/{id}")
+    public EntityModel<User> retrieveUser(@PathVariable int id) {
+        User user = service.findOne(id);
+
+        if ( user == null ){
+            throw new UserNotFoundException(String.format("ID[%s] not found ",id));
+        }
+
+        // hateoas
+        // "all-users", SERVER_PATH + "/users"
+        // ret
+        EntityModel<User> model = EntityModel.of(user);
+        WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+
+        model.add(linkTo.withRel("all-users"));
+
+        return model;
     }
 ```
 

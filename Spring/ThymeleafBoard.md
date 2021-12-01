@@ -276,7 +276,8 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 }
 ```
 
-
+- Board 는 entity, Long은 primarykey의 타입
+- 상속받은 JpaRepository가 @Repository를 지니고 있기 때문에 @Repository 안붙여도 됨
 
 ### dto/BoardDTO 구현
 
