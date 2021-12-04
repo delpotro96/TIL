@@ -96,7 +96,7 @@ npm start
 - #### 조건부 렌더링 
 
 - ```react
-   {b==20&&'20입니다'}
+   {b===20&&'20입니다'}
   ```
 
 
@@ -141,6 +141,8 @@ npm start
 
 
 ### 불변함수 (깊은 복사 함수)
+
+- 깊은 복사하면 데이터와 레퍼런스가 같아도 리빌드함
 
 
 
@@ -225,25 +227,109 @@ const c = [...a, 4]
 console.log('a의 값은 ${a}') // 1, 2, 3
 console.log('b의 값은 ${b}') // 1, 2, 3, 4
 console.log('c의 값은 ${c}') // 1, 2, 3, 4
+
+
+const a6 = {id:1, name:"홍길동"}
+const b6 = {...a, name:"임꺽정"}
+console.log(b6) // id:1, name:임꺽정  // 홍길동을 임꺽정으로 덮어씌움
+
+//즉 사용자 정보 수정 요청이 들어왔을 경우
+const userInfo = {id:"asdf", name:"park", phone:"1111"} 
+// 번호만 phone만 수정
+const newUserInfo = {...userInfo, phone:"2222"}
+console.log(newUserInfo) // id:"asdf", name:"park", phone:"2222"
 ```
 
 
 
+#### Use State
+
+- 버튼을 클릭할 때 마다  number는 ++ but 랜더링 안됨 
+
+```react
+function App() {
+  
+
+  let number = 1;
+  const add = () => {
+    number ++;
+    console.log("Add", number)
+  }
+
+  //랜더링 시점 = 상태값 변경
+  return(
+    <div>
+      <h1>숫자 : {number}</h1>  
+      <button onClick={add}>더하기</button>
+    </div>
+ )
+}
+```
 
 
 
+- use state
+
+```react
+function App() {  
+
+  const [number, setNumber] = useState(2); //React 안에 hooks 라이브러리
+  
+  const add = () => {
+    setNumber(number+1); // 리액트한테 number 값 변경할게 라고 요청
+    console.log("Add", number)
+  }
+
+  //랜더링 시점 = 상태값 변경
+  return(
+    <div>
+      <h1>숫자 : {number}</h1>  
+      <button onClick={add}>더하기</button>
+    </div>
+ )
+}
+```
 
 
 
+#### useEffect
+
+```react
+function App() {
+  
+  const [data, setData] = useState(0);
+
+  // 실행시점 : (1) App() 함수가 최초 실행될 때(그림이 그려질 때)
+  //           (2) 상태변수가 변경될 때
+    		  
+  useEffect(()=>{
+    console.log("useEffect 실행됨")
+  });
+
+  return (
+    <div>
+      <h1> 데이터 :{data}</h1>
+      <button onClick={()=>{setData(data+1)}}>더하기</button>  
+    </div>
+  )
+  
+}
+
+export default App;
+
+```
 
 
 
+- 의존성에 빈 값을 넣어주면 상태변수의 변경에 의존하지 않음, 의존성에 변경해야 하는 값을 넣어주면 유즈이펙트를 실행함
 
+```react
+useEffect(()=>{
+    console.log("useEffect 실행됨")
+    download();    
 
-
-
-
-
+  }, []);
+```
 
 
 
