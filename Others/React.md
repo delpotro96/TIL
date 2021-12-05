@@ -333,7 +333,150 @@ useEffect(()=>{
 
 
 
+#### useMemo 
+
+- 메모라이제이션 (기억)
 
 
 
+- setStr 버튼을 눌렀을 때 `<div>{str} : {getADdResult()} </div>` 가 다시 그려져서 gettAddResult 함수가 실행되는 낭비
+
+```react
+function App() { 
+  const [list, setList] = useState([1,2,3,4])
+  const [str, setStr] = useState("합계")
+
+  
+  const getAddResult = () =>{
+    let sum = 0;
+    list.forEach(i => sum = sum+i);
+    console.log("sum", sum)
+    return sum;
+  }
+
+  return (
+    <div>
+      <button onClick={()=>{
+        setStr("안녕");
+      }}>
+
+        문자변경
+      </button>
+      <button onClick={()=>{setList([...list, 10])}}>리스트 값 추가</button>
+      {list.map(i => (
+        <h1>{i}</h1>
+      ))}
+      <div>{str} : {getAddResult()}</div>
+    </div>
+  )
+  
+}
+
+export default App;
+```
+
+
+
+- useMemo를 통해 제어함
+
+```react
+function App() { 
+  const [list, setList] = useState([1,2,3,4])
+  const [str, setStr] = useState("합계")
+
+   
+  const getAddResult = () =>{
+    let sum = 0;
+    list.forEach(i => sum = sum+i);
+    console.log("sum", sum)
+    return sum;
+  }
+
+  ///useMemo getAddResult() 를 list가 변경될 때만 실행함
+  const addResult = useMemo(()=>getAddResult(), [list])
+ 
+
+  return (
+    <div>
+      <button onClick={()=>{
+        setStr("안녕");
+      }}>
+
+        문자변경
+      </button>
+      <button onClick={()=>{setList([...list, 10])}}>리스트 값 추가</button>
+      {list.map(i => (
+        <h1>{i}</h1>
+      ))}
+      <div>{str} : {addResult}</div>
+    </div>
+  )
+  
+}
+```
+
+
+
+#### useRef (디자인)
+
+- dom을 변경할 때 사용
+
+```react
+import { useRef} from 'react';
+
+function App() { 
+const myRef = useRef(null)
+
+const [list, setList] = useState(
+  [{id:1, name:"길동"},{id:2, name:"길산"}])
+
+  const myRefs = Array.from({length: list.length}).map(()=>createRef());
+
+  return (
+    <div>
+      <button
+        onClick={()=>{
+          myRef.current.style.backgroundColor='red';
+          myRefs[0].current.style.backgroundColor='red';
+        }}>
+        색 변경
+      </button>
+      <div ref={myRef}>박스</div>
+      {list.map((user,index)=><h1 ref={myRefs[index]}>{user.name}</h1>)}
+    </div>
+  )
+  
+}
+
+export default App;
+
+```
+
+
+
+#### Style components
+
+```react
+import styled from "styled-components";
+
+const Title = styled.h1`
+font-size: 1.5em;
+text-align: center;
+color: palevioletred;
+`;
+
+function App() { 
+
+  return (
+    <div>
+      <Title>헬로</Title>
+
+    </div>
+  )
+  
+}
+
+export default App;
+
+```
 
