@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>OEmbed Test</title>
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" rel="stylesheet">
+
+    <style>
+        .customDiv {
+            padding: 50px;
+            background: #299898;
+        }
+
+        .customTitle {
+            color: white;
+        }
+
+        .customInput {
+            width: 80%;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="customDiv">
+    <h1 class="customTitle">oEmbed Test</h1>
+    <form method="get" th:action="@{/}">
+        <input class="customInput" th:name="paramUrl" type="text">
+        <button class="btn btn-warning" type="submit">확인</button>
+    </form>
+</div>
+<table class="table table-striped">
+    <tbody>
+    <tr>
+        <th scope="row">title</th>
+        <td th:text="${result?.title}"></td>
+    </tr>
+    <tr>
+        <th scope="row">type</th>
+        <td th:text="${result?.type}"></td>
+    </tr>
+    <tr>
+        <th scope="row">version</th>
+        <td th:text="${result?.version}"></td>
+    </tr>
+    <tr>
+        <th scope="row">provider_name</th>
+        <td th:text="${result?.provider_name}"></td>
+    </tr>
+    <tr>
+        <th scope="row">provider_url</th>
+        <td th:text="${result?.provider_url}"></td>
+    </tr>
+    <tr>
+        <th scope="row">author_name</th>
+        <td th:text="${result?.author_name}"></td>
+    </tr>
+    <tr>
+        <th scope="row">author_url</th>
+        <td th:text="${result?.author_url}"></td>
+    </tr>
+    <tr>
+        <th scope="row">html</th>
+        <td th:text="${result?.html}"></td>
+    </tr>
+    <tr>
+        <th scope="row"></th>
+        <td th:utext="${result?.html}"></td>
+    </tr>
+    <tr>
+        <th scope="row">width</th>
+        <td th:text="${result?.width}"></td>
+    </tr>
+    <tr>
+        <th scope="row">height</th>
+        <td th:text="${result?.height}"></td>
+    </tr>
+    <tr>
+        <th scope="row">thumbnail_url</th>
+        <td th:text="${result?.thumbnail_url}"></td>
+    </tr>
+    <tr>
+        <th scope="row"></th>
+        <td><img th:src="${result?.thumbnail_url}"></td>
+    </tr>
+    <tr>
+        <th scope="row">thumbnail_width</th>
+        <td th:text="${result?.thumbnail_width}"></td>
+    </tr>
+    <tr>
+        <th scope="row">thumbnail_height</th>
+        <td th:text="${result?.thumbnail_height}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

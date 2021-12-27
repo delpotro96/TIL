@@ -40,5 +40,67 @@ if(a > b) -> return >0
 
 
 
-## Generic Programming
+## AutoBoxing
+
+| Primitives | Wrapper |
+| ---------- | ------- |
+| byte       | Byte    |
+| short      | Short   |
+| int        | Integer |
+| long       | Long    |
+| double     | Double  |
+| char       | Char    |
+| boolean    | Boolean |
+
+- AutoBoxing 란 Primitive Type과 해당 Wrapper 객체 간 타입 변환을 컴파일러가 자동으로 해주는 것을 말한다.
+
+
+
+## 연결리스트 (Linked Lists)
+
+- 연결리스트는 배열의 크기를 직접 설정해야 하는 Array와 다르게 항상 맞는 크기로 만들어지도록 설계되어 있다.
+- 연결리스트에는 노드라는 요소가 숨겨져있다. 
+  - 노드에는 두 가지 정보가 들어있다. 첫째는 next라는 이름의 포인터 둘째는 우리가 노드에 넣은  데이터(포인터)
+  - 노드 각각의 포인터(next)는 인접한 노드를 가리킨다.
+
+​	![image-20211226132058776](C:\Users\Kyunghun Lee\AppData\Roaming\Typora\typora-user-images\image-20211226132058776.png)
+
+- 연결 리스트에 접근할 수 있는 유일한 방법은 head이다. 
+
+
+
+ ### Node
+
+```java
+public class LinkedList<E> implements ListI<E>{
+    
+    class Node<E> {
+        E data;
+        Node<E> next;
+        
+        public Node(E obj){
+            data = obj;
+            next = null;
+        }
+    }
+    private Node<E> head;
+    private int currentSize;
+    
+    public LinkedList(){
+        head = null;
+        currentSize = 0;
+    }
+}
+```
+
+
+
+### 경계조건(Boundary Conditions)
+
+- 어떤 자료구조이든 신경 써야 할 경계 조건이 있다.
+  - 자료 구조가 비어있는 경우
+  - 자료 구조에 단 하나의 요소가 들어있을 경우
+  - 자료 구조의 첫 번째 요소를 제거하거나 추가할 때
+  - 자료 구조의 마지막 요소를 제거하거나 추가할 때
+  - 자료 구조의 중간 부분을 처리할 때
 
