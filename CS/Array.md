@@ -113,6 +113,7 @@ public class RankCal {
 
 
 - 각 행의 합, 각 열의 합, 두 대각선의 합 중 가장 큰 값 리턴
+- Math.max() 는 두 인자 중 큰 값 Math.min() 은 두 인자 중 작은 값 리턴
 
 ```java
 import java.io.BufferedReader;
@@ -159,6 +160,123 @@ public class MostBigLine {
     }
     if (answer < sum || answer < sum2) {
       answer = Math.max(sum, sum2);
+    }
+
+    return answer;
+  }
+}
+```
+
+
+
+## 봉우리 계산
+
+![image-20220101222709403](C:\Users\Kyunghun Lee\AppData\Roaming\Typora\typora-user-images\image-20220101222709403.png)
+
+- 상하좌우보다 커야 봉우리이다. 
+- 이차원 배열(가장자리는 0)이 주어지면 봉우리 개수 리턴
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Bonguri {
+  public static void main(String[] args) throws IOException {
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int N = Integer.parseInt(br.readLine());
+    int[][] array = new int[N + 2][N + 2];
+
+    /** array 배열 가장자리에 0 주입 */
+    for (int i = 0; i < N + 2; i++) {
+      array[0][i] = 0;
+      array[N + 1][i] = 0;
+      array[i][0] = 0;
+      array[i][N + 1] = 0;
+    }
+
+    /** array에 값 주입 */
+    for (int i = 1; i < N + 1; i++) {
+      String[] temp = br.readLine().split("\\s+");
+      for (int j = 1; j < N + 1; j++) {
+        array[i][j] = Integer.parseInt(temp[j - 1]);
+      }
+    }
+
+    System.out.println(solution(N,array));
+  }
+
+  public static int solution(int N, int[][] array) {
+    int answer = 0;
+
+    for (int i = 1; i < N + 1; i++) {
+      for (int j = 1; j < N + 1; j++) {
+        if (array[i - 1][j] < array[i][j]
+            && array[i][j + 1] < array[i][j]
+            && array[i + 1][j] < array[i][j]
+            && array[i][j - 1] < array[i][j]) {
+          answer++;
+        }
+      }
+    }
+
+    return answer;
+  }
+}
+```
+
+
+
+
+
+## 임시반장 정하기
+
+- 6학년 반장을 정함
+- 학생 중 1 ~ 5학년 까지 한번이라도 같은 반이었던 사람이 가장 많은 학생이 임시 반장
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class SelectLeader {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    int N = Integer.parseInt(br.readLine());
+    int[][] array = new int[N][5];
+    for (int i = 0; i < N; i++) {
+      String[] temp = br.readLine().split("\\s+");
+      for (int j = 0; j < 5; j++) {
+        array[i][j] = Integer.parseInt(temp[j]);
+      }
+    }
+    System.out.println(solution(N, array));
+  }
+
+  public static int solution(int N, int[][] array) {
+    int answer = 0;
+    int max = 0;
+
+    for (int i = 0; i < N; i++) {
+      int count = 0;
+      for (int j = 0; j < N; j++) {
+        for (int k = 0; k < 5; k++) {
+          if (array[i][k] == array[j][k]) {
+            count++;
+            break;
+          }
+        }
+      }
+      if (max < count) {
+        max = count;
+        answer = i + 1;
+      }
     }
 
     return answer;
