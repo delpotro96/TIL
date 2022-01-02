@@ -284,3 +284,66 @@ public class SelectLeader {
 }
 ```
 
+
+
+## 멘토 구하기
+
+![image-20220102211627428](C:\Users\Kyunghun Lee\AppData\Roaming\Typora\typora-user-images\image-20220102211627428.png)
+
+- 이러한 input이 주어지면 4는 학생 수, 3은 시험의 수
+- 3, 4, 1, 2가 주어지면 3번 학생이 1등, 1번 학생이 3등
+- 멘토와 멘티가 짝이 되는 경우의 수를 구해야 함
+- 멘토는 멘티보다 모든 테스트에서 앞서야 함
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Mento {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] temp = br.readLine().split("\\s+");
+    int N = Integer.parseInt(temp[0]);
+    int M = Integer.parseInt(temp[1]);
+
+    int[][] array = new int[M][N];
+    for (int i = 0; i < M; i++) {
+      String[] temp2 = br.readLine().split("\\s+");
+      for (int j = 0; j < N; j++) {
+        array[i][j] = Integer.parseInt(temp2[j]);
+      }
+    }
+    System.out.println(solution(N, M, array));
+  }
+
+  public static int solution(int N, int M, int[][] array) {
+    int answer = 0;
+    /** N은 학생 수 M은 테스트 수 */
+    for (int i = 1; i <= N; i++) {
+      for (int j = 1; j <= N; j++) {
+        int count = 0;
+        for (int k = 0; k < M; k++) {
+          int pi = 0, pj = 0;
+          for (int s = 0; s < N; s++) {
+            if (array[k][s] == i) {
+              pi = s;
+            }
+            if (array[k][s] == j) {
+              pj = s;
+            }
+          }
+          if (pi < pj) {
+            count++;
+          }
+        }
+        if (count == M) {
+          answer++;
+        }
+      }
+    }
+
+    return answer;
+  }
+}
+```
