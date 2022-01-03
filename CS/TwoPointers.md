@@ -367,3 +367,107 @@ public class SpecialSum {
 }
 ```
 
+
+
+## 연속된 자연수의 합
+
+- N이 주어지면 2개 이상의 연속된 자연수의 합으로 N을 출력하는 개수를 리턴
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+public class SequenceSum {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    int N = Integer.parseInt(br.readLine());
+    System.out.println(solution(N));
+  }
+
+  public static int solution(int N) {
+    int answer = 0;
+    int sum = 0;
+    int lt = 0;
+    ArrayList<Integer> list = new ArrayList<>();
+
+    for (int i = 1; i <= N / 2 + 1; i++) {
+      list.add(i);
+    }
+
+    for (int rt = 0; rt < N / 2 + 1; rt++) {
+      sum += list.get(rt);
+      if (sum == N) {
+        answer++;
+      }
+      while(N<=sum){
+        sum -= list.get(lt++);
+        if(sum==N){
+          answer++;
+        }
+      }
+    }
+
+    return answer;
+  }
+}
+```
+
+
+
+## 최대 길이 연속부분수열
+
+
+
+- 0과 1로 구성된 길이가 N인 수열이 주어짐
+- 수열에서 최대 K번 0을 1로 변경 가능
+- 1로만 구성된 최대 길이의 연속부분수열의 길이 리턴
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class MaxSequence {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] temp = br.readLine().split("\\s+");
+    int N = Integer.parseInt(temp[0]);
+    int K = Integer.parseInt(temp[1]);
+    String[] temp2 = br.readLine().split("\\s+");
+    int[] array = new int[N];
+
+    for (int i = 0; i < N; i++) {
+      array[i] = Integer.parseInt(temp2[i]);
+    }
+
+    System.out.println(solution(N, K, array));
+  }
+
+  public static int solution(int N, int K, int[] array) {
+    int answer = 0;
+    int count = 0;
+    int temp = 0;
+    int lt = 0;
+    for (int rt = 0; rt < N; rt++) {
+      count = rt - lt;
+      if(array[rt]==0){
+        temp++;
+      }
+      while(K<temp){
+        if(array[lt++]==0){
+          temp--;
+        }
+      }
+      answer = Math.max(answer, count);
+    }
+    return answer;
+  }
+}
+
+```
+
