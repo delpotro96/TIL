@@ -242,3 +242,53 @@ public class FindAllAnagram {
 ```
 
  
+
+## K번째 큰 수
+
+- N개의 int와 int K가 주어짐
+- 3장을 뽑을 수 있는 모든 경우 중 3장의 합 중 K번째로 큰 수 출력
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class KthBigger {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] temp = br.readLine().split("\\s+");
+    int N = Integer.parseInt(temp[0]);
+    int M = Integer.parseInt(temp[1]);
+    String[] temp2 = br.readLine().split("\\s+");
+    int[] array = new int[N];
+    for (int i = 0; i < N; i++) {
+      array[i] = Integer.parseInt(temp2[i]);
+    }
+    System.out.println(solution(N, M, array));
+  }
+
+  public static int solution(int N, int M, int[] array) {
+    int answer = 0;
+    ArrayList<Integer> list = new ArrayList<>();
+    for (int i = 0; i < N - 2; i++) {
+      for (int j = i + 1; j < N - 1; j++) {
+        for (int k = j + 1; k < N; k++) {
+          if (!list.contains(array[i] + array[j] + array[k])) {
+            list.add(array[i] + array[j] + array[k]);
+          }
+        }
+      }
+    }
+    list.sort(Collections.reverseOrder());
+    if (M-1 < list.size()) {
+      answer = list.get(M-1);
+    } else {
+      answer = -1;
+    }
+    return answer;
+  }
+}
+```
+
