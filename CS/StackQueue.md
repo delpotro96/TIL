@@ -6,11 +6,14 @@
 
 - push
 - pop
-- peek -> 스택을 꺼내지는 않고 확인만 함
+- peek -> 가장 위에 있는 값을 확인만 함
 
 ### Queue
 
 - 큐는 First in First out
+- offer
+- poll
+- peek -> 가장 앞에 있는 값을 확인만 함
 
 
 
@@ -255,6 +258,102 @@ public class PostFix {
       }
     }
     answer=stack.pop();
+
+    return answer;
+  }
+}
+```
+
+
+
+## 쇠 막대기
+
+- [10799번: 쇠막대기 (acmicpc.net)
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
+
+public class MetalStick {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String s = br.readLine();
+    System.out.println(solution(s));
+  }
+
+  public static int solution(String s) {
+    int answer = 0;
+    Stack<Character> stack = new Stack<>();
+    for(int i = 0; i < s.length(); i++){
+      if(s.charAt(i)=='('){
+        stack.push(s.charAt(i));
+      }else if(s.charAt(i)==')'){
+        if(s.charAt(i-1)=='('){
+          stack.pop();
+          answer += stack.size();
+        } else if( s.charAt(i-1)==')'){
+          stack.pop();
+          answer += 1;
+        }
+      }
+
+    }
+
+    return answer;
+  }
+}
+```
+
+
+
+## 공주 구하기
+
+- input으로 N과 M이 주어짐
+- 1번부터 N번까지 계속 순환하며 번호를 외치고 M을 외치면 구조팀에서 제외됨
+- 다음 사람이 1부터 다시 외침 
+- 한명이 남을 때 까지 계속 하다가 마지막 한명 리턴
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class ResquePrincess {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] temp = br.readLine().split("\\s+");
+
+    int N = Integer.parseInt(temp[0]);
+    int M = Integer.parseInt(temp[1]);
+    System.out.println(solution(N, M));
+  }
+
+  public static int solution(int N, int M) {
+    int answer = 0;
+
+    Queue<Integer> q = new LinkedList<>();
+
+    for (int i = 1; i <= N; i++) {
+      q.offer(i);
+    }
+
+    while (!q.isEmpty()) {
+      for (int i = 1; i < M; i++) {
+        q.offer(q.poll());
+      }
+      q.poll();
+      if (q.size() == 1) {
+        answer = q.poll();
+      }
+    }
 
     return answer;
   }
