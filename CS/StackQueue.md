@@ -360,3 +360,173 @@ public class ResquePrincess {
 }
 ```
 
+
+
+## 교육과정 설계
+
+- input으로 필수과목과 누군가의 수강계획이 String으로 입력됨
+- 누군가의 수강계획에 필수과목이 입력되 있으며 순서가 올바르게 되어있다면 return "YES" else "NO"
+
+
+
+### 내가 작성한 코드
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+public class SetUpStudy {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String s1 = br.readLine();
+    String s2 = br.readLine();
+
+    System.out.println(solution(s1, s2));
+  }
+
+  public static String solution(String s1, String s2) {
+    String answer = "";
+    ArrayList<Character> list = new ArrayList<>();
+
+    for (char x : s1.toCharArray()) {
+      list.add(x);
+    }
+
+    for (char x : s2.toCharArray()) {
+      if (list.contains(x)) {
+        answer += x;
+      }
+    }
+
+    if(answer.equals(s1)){
+      return "YES";
+    } else {
+      return "NO";
+    }
+  }
+}
+
+```
+
+
+
+### Queue 를 사용한 코드
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class SetUpStudy {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String s1 = br.readLine();
+    String s2 = br.readLine();
+
+    System.out.println(solution(s1, s2));
+  }
+
+  public static String solution(String s1, String s2) {
+    String answer = "";
+
+    Queue<Character> queue = new LinkedList<>();
+
+    for (char x : s1.toCharArray()) {
+      queue.offer(x);
+    }
+    for (char x : s2.toCharArray()) {
+      if (queue.contains(x)) {
+        if (queue.poll() != x) {
+          return "NO";
+        }
+      }
+    }
+    if(queue.isEmpty()){
+      return "YES";
+    }else{
+      return "NO";
+    }
+  }
+}
+```
+
+
+
+## 응급실
+
+- input으로 환자 수 N과 특정환자의 인덱스 M, 환자 위험도 리스트 array가 주어진다
+- 환자 순서 리스트의 순서대로 호명이 된다. 만약 리스트에 위험도가 더 높은 환자가 존재할 시 순서는 가장 뒤로 밀려난다.
+- M 환자는 몇 번째로 치료 될지 리턴
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
+
+public class EmergencyRoom {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] temp = br.readLine().split("\\s+");
+    int N = Integer.parseInt(temp[0]);
+    int M = Integer.parseInt(temp[1]);
+
+    String[] temp2 = br.readLine().split("\\s+");
+    int[] array = new int[N];
+
+    for (int i = 0; i < N; i++) {
+      array[i] = Integer.parseInt(temp2[i]);
+    }
+
+    System.out.println(solution(N, M, array));
+  }
+
+  public static int solution(int N, int M, int[] array) {
+    int answer = 1;
+
+    Queue<Person> queue = new LinkedList<>();
+    for (int i = 0; i < N; i++) {
+      queue.offer(new Person(i, array[i]));
+    }
+
+    while (!queue.isEmpty()) {
+      Person temp = queue.poll();
+      for (Person x : queue) {
+        if (x.priority > temp.priority) {
+          queue.offer(temp);
+          temp = null;
+          break;
+        }
+      }
+      if (temp != null) {
+        if (temp.id == M) {
+          return answer;
+        } else {
+          answer++;
+        }
+      }
+    }
+
+    return answer;
+  }
+}
+
+class Person {
+  int id;
+  int priority;
+
+  public Person(int id, int priority) {
+    this.id = id;
+    this.priority = priority;
+  }
+}
+
+```
+
+
+
+ 
