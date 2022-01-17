@@ -98,3 +98,39 @@ public class Factorial {
 }
 ```
 
+
+
+## 피보나치 재귀
+
+- 재귀함수를 사용하여 피보나치 출력
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class FiboDFS {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int N = Integer.parseInt(br.readLine());
+    fibo = new int[N + 1];
+    solution(N);
+    for (int i = 1; i < N; i++) {
+      System.out.print(fibo[i] + " ");
+    }
+  }
+
+  public static int solution(int N) {
+    if (N == 1) {
+      return fibo[N] = 1;
+    } else if (N == 2) {
+      return fibo[N] = 1;
+    } else {
+      return fibo[N] = solution(N - 2) + solution(N - 1);
+    }
+  }
+
+  static int[] fibo;
+}
+```
+
