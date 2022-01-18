@@ -134,3 +134,178 @@ public class FiboDFS {
 }
 ```
 
+
+
+## 이진트리 순회(DFS)
+
+![image-20220118222316315](C:\Users\Kyunghun Lee\AppData\Roaming\Typora\typora-user-images\image-20220118222316315.png)
+
+- 전위순회는 부모>왼쪽>오른쪽
+- 중위순회는 왼쪽>부모>오른쪽
+- 후위순회는 왼쪽>오른쪽>부모
+
+### 전위순회
+
+```java
+public class DFSPratice {
+  Node root;
+
+  public static void main(String[] args) {
+    DFSPratice tree = new DFSPratice();
+    tree.root = new Node(1);
+    tree.root.lt = new Node(2);
+    tree.root.rt = new Node(3);
+    tree.root.lt.lt = new Node(4);
+    tree.root.lt.rt = new Node(5);
+    tree.root.rt.lt = new Node(6);
+    tree.root.rt.rt = new Node(7);
+    tree.solution(tree.root);
+  }
+
+  public void solution(Node root) {
+    if (root == null) {
+      return;
+    } else {
+      System.out.println(root.data);
+      solution(root.lt);
+      solution(root.rt);
+    }
+  }
+}
+
+class Node {
+  int data;
+  Node lt, rt;
+
+  public Node(int val) {
+    data = val;
+    lt = rt = null;
+  }
+}
+```
+
+
+
+### 중위순회
+
+```java
+public class DFSPratice {
+  Node root;
+
+  public static void main(String[] args) {
+    DFSPratice tree = new DFSPratice();
+    tree.root = new Node(1);
+    tree.root.lt = new Node(2);
+    tree.root.rt = new Node(3);
+    tree.root.lt.lt = new Node(4);
+    tree.root.lt.rt = new Node(5);
+    tree.root.rt.lt = new Node(6);
+    tree.root.rt.rt = new Node(7);
+    tree.solution(tree.root);
+  }
+
+  public void solution(Node root) {
+    if (root == null) {
+      return;
+    } else {
+      solution(root.lt);
+      System.out.println(root.data);
+      solution(root.rt);
+    }
+  }
+}
+
+class Node {
+  int data;
+  Node lt, rt;
+
+  public Node(int val) {
+    data = val;
+    lt = rt = null;
+  }
+}
+```
+
+
+
+### 후위순회
+
+```java
+public class DFSPratice {
+  Node root;
+
+  public static void main(String[] args) {
+    DFSPratice tree = new DFSPratice();
+    tree.root = new Node(1);
+    tree.root.lt = new Node(2);
+    tree.root.rt = new Node(3);
+    tree.root.lt.lt = new Node(4);
+    tree.root.lt.rt = new Node(5);
+    tree.root.rt.lt = new Node(6);
+    tree.root.rt.rt = new Node(7);
+    tree.solution(tree.root);
+  }
+
+  public void solution(Node root) {
+    if (root == null) {
+      return;
+    } else {
+      solution(root.lt);
+      solution(root.rt);        
+      System.out.println(root.data);
+    }
+  }
+}
+
+class Node {
+  int data;
+  Node lt, rt;
+
+  public Node(int val) {
+    data = val;
+    lt = rt = null;
+  }
+}
+```
+
+
+
+## 부분집합 구하기(DFS)
+
+- 자연수 N이 주어지면 1부터 N까지의 원소를 갖는 집합의 부분집합을 모두 출력하라
+- 공집합은 출력하지 않는다
+
+```java
+package algorithm;
+
+import java.util.*;
+
+class SubSetDFS {
+  static int n;
+  static int[] ch;
+
+  public void DFS(int L) {
+    if (L == n + 1) {
+      String tmp = "";
+      for (int i = 1; i <= n; i++) {
+        if (ch[i] == 1) tmp += (i + " ");
+      }
+      if (tmp.length() > 0) System.out.println(tmp);
+    } else {
+      ch[L] = 1;
+      DFS(L + 1);
+      ch[L] = 0;
+      DFS(L + 1);
+    }
+  }
+
+  public static void main(String[] args) {
+    SubSetDFS T = new SubSetDFS();
+    n = 3;
+    ch = new int[n + 1];
+    T.DFS(1);
+  }
+}
+
+```
+
