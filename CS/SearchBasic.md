@@ -309,3 +309,65 @@ class SubSetDFS {
 
 ```
 
+
+
+## 송아지 찾기(BFS)
+
+- 현수는 송아지를 찾아야 한다. 현수의 위치와 송아지의 위치가 주어진다 
+- 현수는 앞으로 1, 뒤로 1, 앞으로 5를 이동할 수 있다
+- 현수가 송아지의 위치까지 갈 수 있는 최소의 이동횟수를 구하시오
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class FindCalf {
+
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] tmp = br.readLine().split("\\s+");
+
+    int S = Integer.parseInt(tmp[0]);
+    int T = Integer.parseInt(tmp[1]);
+
+    System.out.println(solution(S, T));
+  }
+
+  public static int solution(int S, int T) {
+    int[] dis = {1, -1, 5};
+    int[] ch;
+    ch = new int[10001];
+    ch[S] = 1;
+    Queue<Integer> q = new LinkedList<>();
+    q.offer(S);
+    int L = 0;
+    while (!q.isEmpty()) {
+      int len = q.size();
+      for (int i = 0; i < len; i++) {
+        int x = q.poll();
+        for (int j = 0; j < 3; j++) {
+          int nx = x + dis[j];
+          if (nx == T) {
+            return L + 1;
+          }
+          if (1 <= nx && nx <= 10000 && ch[nx] == 0) {
+            ch[nx] = 1;
+            q.offer(nx);
+          }
+        }
+      }
+      L++;
+    }
+
+    return 0;
+  }
+}
+```
+
+ 
+
