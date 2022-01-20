@@ -371,3 +371,51 @@ public class FindCalf {
 
  
 
+## 합이 같은 부분집합(DFS)
+
+- N개의 원소로 구성된 자연수 집합이 주어진다
+
+- 집합을 두개의 부분집합으로 나누었을 때 두 부분집합의 원소의 합이 서로 같은 경우가 존재하면
+  YES else NO 리턴하시오
+
+  ```java
+  import java.io.BufferedReader;
+  import java.io.IOException;
+  import java.io.InputStreamReader;
+  
+  public class SameSumSubset {
+    static String answer = "NO";
+    static int N, total = 0;
+    static boolean flag = false;
+  
+    public static void main(String[] args) throws IOException {
+      BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+      N = Integer.parseInt(br.readLine());
+      String[] tmp = br.readLine().split("\\s+");
+      int[] array = new int[N];
+      for (int i = 0; i < N; i++) {
+        array[i] = Integer.parseInt(tmp[i]);
+        total += array[i];
+      }
+      solution(0, 0, array);
+      System.out.println(answer);
+    }
+  
+    public static void solution(int L, int sum, int[] arr) {
+      if (flag) return;
+      if (sum > total / 2) return;
+      if (L == N) {
+        if ((total - sum) == sum) {
+          answer = "YES";
+          flag = true;
+        }
+      } else {
+        solution(L + 1, sum + arr[L], arr);
+        solution(L + 1, sum, arr);
+      }
+    }
+  }
+  ```
+
+  
+
