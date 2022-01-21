@@ -417,5 +417,43 @@ public class FindCalf {
   }
   ```
 
-  
+
+
+
+## 바둑이 승차
+
+- N마리의 바둑이와 각 바둑이의 무게가 주어지면 철수가 트럭에 태울 수 있는 가장 무거운 무게를 구하시오
+- 트럭의 최대 하중이 주어진다
+
+```java
+import java.io.*;
+
+class MaxWeight {
+  static int answer = Integer.MIN_VALUE, C, N;
+
+  public static void solution(int L, int sum, int[] arr) {
+    if (sum > C) return;
+    if (L == N) {
+      answer = Math.max(answer, sum);
+    } else {
+      solution(L + 1, sum + arr[L], arr);
+      solution(L + 1, sum, arr);
+    }
+  }
+
+  public static void main(String[] args) throws IOException {
+
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] tmp = br.readLine().split("\\s+");
+    C = Integer.parseInt(tmp[0]);
+    N = Integer.parseInt(tmp[1]);
+    int[] array = new int[N];
+    for (int i = 0; i < N; i++) {
+      array[i] = Integer.parseInt(br.readLine());
+    }
+    solution(0, 0, array);
+    System.out.println(answer);
+  }
+}
+```
 
