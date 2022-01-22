@@ -457,3 +457,52 @@ class MaxWeight {
 }
 ```
 
+
+
+## 최대점수 구하기(DFS)
+
+- 문제의 개수와 제한 시간이 주어진다
+- 각 문제의 문제를 풀었을 때의 점수와 걸리는 시간이 주어진다
+- 제한 시간안에 얻을 수 있는 최대 점수를 출력하시오
+
+
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class HighestScore {
+  static int answer = Integer.MIN_VALUE, N, M;
+
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    String[] tmp = br.readLine().split("\\s+");
+    N = Integer.parseInt(tmp[0]);
+    M = Integer.parseInt(tmp[1]);
+    int[] a = new int[N];
+    int[] b = new int[N];
+    for (int i = 0; i < N; i++) {
+      tmp = br.readLine().split("\\s+");
+      a[i] = Integer.parseInt(tmp[0]);
+      b[i] = Integer.parseInt(tmp[1]);
+    }
+    solution(0, 0, 0, a, b);
+    System.out.println(answer);
+  }
+
+  public static void solution(int L, int sum, int time, int[] ps, int[] pt) {
+    // ps pt == problem score, time
+    if (M < time) {
+      return;
+    }
+    if (L == N) {
+      answer = Math.max(answer, sum);
+    } else {
+      solution(L + 1, sum + ps[L], time + pt[L], ps, pt);
+      solution(L + 1, sum, time, ps, pt);
+    }
+  }
+}
+```
+
