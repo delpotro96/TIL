@@ -224,3 +224,104 @@ public class Baekjoon2217 {
 
 ```
 
+
+
+## 게임을 만든 동준이
+
+- 학교에서 그래픽스 수업을 들은 동준이는 수업시간에 들은 내용을 바탕으로 스마트폰 게임을 만들었다. 게임에는 총 N개의 레벨이 있고, 각 레벨을 클리어할 때 마다 점수가 주어진다. 플레이어의 점수는 레벨을 클리어하면서 얻은 점수의 합으로, 이 점수를 바탕으로 온라인 순위를 매긴다. 동준이는 레벨을 난이도 순으로 배치했다. 하지만, 실수로 쉬운 레벨이 어려운 레벨보다 점수를 많이 받는 경우를 만들었다.
+
+  이 문제를 해결하기 위해 동준이는 특정 레벨의 점수를 감소시키려고 한다. 이렇게해서 각 레벨을 클리어할 때 주는 점수가 증가하게 만들려고 한다.
+
+  각 레벨을 클리어할 때 얻는 점수가 주어졌을 때, 몇 번 감소시키면 되는지 구하는 프로그램을 작성하시오. 점수는 항상 양수이어야 하고, 1만큼 감소시키는 것이 1번이다. 항상 답이 존재하는 경우만 주어진다. 정답이 여러 가지인 경우에는 점수를 내리는 것을 최소한으로 하는 방법을 찾아야 한다.
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Baekjoon2847 {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    int N = Integer.parseInt(br.readLine());
+    int[] array = new int[N];
+    for (int i = 0; i < N; i++) {
+      array[i] = Integer.parseInt(br.readLine());
+    }
+    System.out.println(solution(N, array));
+  }
+
+  public static int solution(int N, int[] array) {
+    int answer = 0;
+
+    for (int i = N - 1; 0 < i; i--) {
+      if (array[i] <= array[i - 1]) {
+        while (array[i] <= array[i - 1]) {
+          answer++;
+          array[i - 1]--;
+        }
+      }
+    }
+
+    return answer;
+  }
+}
+
+```
+
+
+
+## 카드 합체 놀이
+
+
+
+- 석환이는 아기다. 아기 석환이는 자연수가 쓰여져있는 카드를 갖고 다양한 놀이를 하며 노는 것을 좋아한다. 오늘 아기 석환이는 무슨 놀이를 하고 있을까? 바로 카드 합체 놀이이다!
+
+  아기 석환이는 자연수가 쓰여진 카드를 n장 갖고 있다. 처음에 i번 카드엔 ai가 쓰여있다. 카드 합체 놀이는 이 카드들을 합체하며 노는 놀이이다. 카드 합체는 다음과 같은 과정으로 이루어진다.
+
+  1. x번 카드와 y번 카드를 골라 그 두 장에 쓰여진 수를 더한 값을 계산한다. (x ≠ y)
+  2. 계산한 값을 x번 카드와 y번 카드 두 장 모두에 덮어 쓴다.
+
+  이 카드 합체를 총 m번 하면 놀이가 끝난다. m번의 합체를 모두 끝낸 뒤, n장의 카드에 쓰여있는 수를 모두 더한 값이 이 놀이의 점수가 된다. 이 점수를 가장 작게 만드는 것이 놀이의 목표이다.
+
+  아기 석환이는 수학을 좋아하긴 하지만, 아직 아기이기 때문에 점수를 얼마나 작게 만들 수 있는지를 알 수는 없었다(어른 석환이는 당연히 쉽게 알 수 있다). 그래서 문제 해결 능력이 뛰어난 여러분에게 도움을 요청했다. 만들 수 있는 가장 작은 점수를 계산하는 프로그램을 만들어보자.
+
+```java
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Baekjoon15903 {
+  public static void main(String[] args) throws IOException {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+    int N = Integer.parseInt(st.nextToken());
+    int M = Integer.parseInt(st.nextToken());
+    long[] array = new long[N];
+    st = new StringTokenizer(br.readLine(), " ");
+    for (int i = 0; i < N; i++) {
+      array[i] = Integer.parseInt(st.nextToken());
+    }
+    System.out.println(solution(N, M, array));
+  }
+
+  public static long solution(int N, int M, long[] array) {
+    long answer = 0;
+
+    for (int i = 0; i < M; i++) {
+      Arrays.sort(array);
+      long temp =array[0] + array[1];
+      array[0] = temp;
+      array[1] = temp;
+    }
+
+    for (long x : array) {
+      answer += x;
+    }
+
+    return answer;
+  }
+}
+```
+
